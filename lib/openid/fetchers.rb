@@ -98,6 +98,7 @@ module OpenID
   end
 
   def self.fetcher=(fetcher)
+    Rails.logger.debug "<><><><><><><> Setting the OpenID fetcher.  Fetcher: #{fetcher.inspect}"
     @fetcher = fetcher
   end
 
@@ -111,7 +112,7 @@ module OpenID
     @fetcher = StandardFetcher.new(proxy_uri.host, proxy_uri.port,
                                    proxy_uri.user, proxy_uri.password)
   end
-  
+
   class StandardFetcher
 
     USER_AGENT = "ruby-openid/#{OpenID::VERSION} (#{RUBY_PLATFORM})"
@@ -127,6 +128,7 @@ module OpenID
                    proxy_user=nil, proxy_pass=nil)
       @ca_file = nil
       @proxy = Net::HTTP::Proxy(proxy_addr, proxy_port, proxy_user, proxy_pass)
+      Rails.logger.debug "<><><><><><>?<><><>  Initialize standard fetcher.  Proxy: #{proxy_addr}:#{proxy_port}"
       @timeout = TIMEOUT
     end
 
